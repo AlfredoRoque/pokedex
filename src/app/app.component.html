@@ -1,21 +1,53 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<nav id="nav" class="nav-bar">
+  <div class="conteiner-header">
+      <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsjemEJ16etr3vEyyUBXrsw4Y16K7z2ep4mg&usqp=CAU" alt="logo">
+      <h1 class="title">POKEDEX</h1>
+  </div>
+  <div class="container-redes">
+      <div class="respmenu">
+          <input type="checkbox">
+          <i class="fas fa-bars"></i>
+          <i class="fas fa-times"></i>
+          <nav>
+              <ul class="list_redes">
+                  <li class="red"><a target="_blank" href="https://www.youtube.com/"><i class="icono-youtube fab fa-youtube"></i></a></li>
+                  <li class="red"><a target="_blank" href="https://www.facebook.com/"><i class="icono-facebook fab fa-facebook"></i></a></li>
+                  <li class="red"><a target="_blank" href="https://twitter.com/"><i class="icono-twiter fab fa-twitter-square"></i></a></li>
+              </ul>
+          </nav>
+        </div>
+  </div>
+</nav>
+<div class="first_container" id="first_container">
 
+<div class="busqueda">
+  <input class="txtSearch" [(ngModel)]="busqueda" type="text" placeholder="Search Pokemon..." />
+  <input class="btnSearch" (click)="search()" type="submit" value="Search" />
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th *ngFor="let title of titles">{{title}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let poke of pokemons; let i = index">
+            <td>{{poke.id}}</td>
+            <td><span class="ms-2">{{poke.name}}</span>
+            </td>
+            <td>{{poke.tipo}}</td>
+            <td><a (click)="searchLink(poke.id)" routerLink="single/{{poke.id}}"><img src="{{poke.image}}" alt="{{poke.name}}"></a></td>
+        </tr>
+    </tbody>
+</table>
+<div class="container_btn">
+  <input class="btn" (click)="prevPage()" type="button" value="<--Back">
+  <input class="btn" (click)="nextPage()" type="button" value="Next-->">
+</div>
+
+<footer hidden="true" id="footer" class="footer">
+      <h6 class="copi">Copyright 2021 Pokedex</h6>
+</footer>
+</div>
 <router-outlet></router-outlet>

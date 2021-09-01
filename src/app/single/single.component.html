@@ -1,0 +1,31 @@
+<div id="second_container" class="second_container">
+    <table class="table-pokemon">
+        <thead>
+            <tr>
+                <th *ngFor="let title of titles">{{title}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let poke of pokemons; let i = index">
+                <td>{{poke.id}}</td>
+                <td><span class="ms-2">{{poke.name}}</span>
+                </td>
+                <td>{{poke.tipo}}</td>
+                <td>
+                    <span *ngFor="let abil of poke.abilities" class="ms-2">{{abil.ability.name}} </span>
+                </td>
+                <td>
+                    <span *ngFor="let game of poke.game_indices" class="ms-2">{{game.version.name}} </span>
+                </td>
+                <td>
+                    <span *ngFor="let move of poke.moves" class="ms-2">{{move.move.name}} </span>
+                </td>
+                <td><img src="{{poke.image}}" alt="{{poke.name}}"></td>
+                <td><img src="{{poke.back_image}}" alt="{{poke.name}}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="container-back">
+        <a class="btn-back" href="index.html"> Regresar</a>
+    </div>
+  </div>
