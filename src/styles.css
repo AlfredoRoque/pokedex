@@ -33,7 +33,9 @@ body{
 
 .conteiner-header{
     height: 55px;
-    display: flex;  
+    display: flex;
+    text-decoration: none;
+    cursor: pointer; 
 }
 
 .container-redes{
@@ -41,6 +43,10 @@ body{
     display: flex;
     margin-left: auto;
     align-self: center;
+}
+
+.btn-Hamburger{
+    cursor: pointer;
 }
 
 .red{
@@ -122,6 +128,7 @@ body{
     border: 1px;
     border-style: solid;
     border-spacing: 0px;
+    border-radius: 5px;
 }
 
 .table-pokemon{
@@ -130,6 +137,7 @@ body{
     border: 1px;
     border-style: solid;
     border-spacing: 0px;
+    border-radius: 5px;
 }
 
 tr{

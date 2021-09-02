@@ -1,16 +1,5 @@
 import { Component, Output, Input, OnInit } from '@angular/core';
-
-class Pokemon{
-  id: number;
-  name: string;
-  tipo: string;
-  image: string;
-  abilities: {};
-  game_indices:{};
-  moves:{};
-  back_image: string;
-
-}
+import { Pokemon } from '../app.component';
 
 @Component({
   selector: 'app-single',
@@ -24,20 +13,16 @@ export class SingleComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("Hola");
     var URLactual = window.location;
     var idd = URLactual.pathname.replace("single","");
     idd = idd.replace("//","");
-    console.log(idd);
     this.searchLink(idd);
   }
 
   async searchLink(id){
     const unicPoke = await fetch("https://pokeapi.co/api/v2/pokemon/"+id);
-    //console.log(unicPoke);
     if(unicPoke.status==200){
       const data = await unicPoke.json();
-      console.log(data);
       this.createSinglePokemon(data);
       document.getElementById("first_container").setAttribute("hidden","true");
       document.getElementById("footer").setAttribute("hidden","true");
@@ -45,8 +30,6 @@ export class SingleComponent implements OnInit {
   }
 
   createSinglePokemon(pok){
-    //console.log(poke.url);
-    //console.log(dataPoke);
     this.pokemons=[];
     let p:Pokemon = new Pokemon();
     p.id =  pok.id;
@@ -63,7 +46,6 @@ export class SingleComponent implements OnInit {
       p.moves = pok.moves;
     }
     p.back_image = pok.sprites.back_default;
-    console.log(p);
     this.pokemons.push(p);
 }
 
