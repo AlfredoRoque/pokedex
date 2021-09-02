@@ -1,4 +1,7 @@
 # Pokedex
+install node js whit https://nodejs.org/es/download/
+
+install Angular CLI whit npm install -g @angular/cli
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.
 
