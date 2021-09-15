@@ -23,8 +23,8 @@
 <div class="first_container" id="first_container">
 
 <div class="busqueda">
-  <input class="txtSearch" [(ngModel)]="busqueda" type="text" placeholder="Search Pokemon..." />
-  <input class="btnSearch" (click)="search()" type="submit" value="Search" />
+  <input class="txtSearch" [(ngModel)]="busqueda" type="text" placeholder="Buscar Pokemon..." />
+  <input class="btnSearch" (click)="search()" type="submit" value="Buscar" />
 </div>
 <table class="table">
     <thead>
@@ -37,8 +37,8 @@
             <td>{{poke.id}}</td>
             <td><span class="ms-2">{{poke.name}}</span>
             </td>
-            <td>{{poke.tipo}}</td>
-            <td><a (click)="searchLink(poke.id)" routerLink="single/{{poke.id}}"><img src="{{poke.image}}" alt="{{poke.name}}"></a></td>
+            <td><span *ngFor="let type of poke.tipo" class="ms-2">{{type}}</span></td>
+            <td><a (click)="searchLink(poke.id)" routerLink="single/{{poke.id}}"><img class="poke-picture-list" src="{{poke.image}}" alt="{{poke.name}}"></a></td>
         </tr>
     </tbody>
 </table>

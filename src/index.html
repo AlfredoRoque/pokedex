@@ -12,4 +12,19 @@
 <body>
   <app-root></app-root>
 </body>
+<script>
+  dbdbd();
+
+function dbdbd(){
+    var db = openDatabase('./world_sql_content_4836972520cefec5361585731ba708bb.sqlite3', '1.0', '', 2 * 1024 * 1024);
+    db.transaction(function (tx) {
+    tx.executeSql('SELECT * FROM DestinyClassDefinition', [], function (tx, results) {
+    var len = results.rows.length, i;
+    for (i = 0; i < len; i++) {
+      console.log(results.rows.item(i).text);
+    }
+  });
+});
+}
+</script>
 </html>
