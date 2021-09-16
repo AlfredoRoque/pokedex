@@ -12,7 +12,7 @@ export class SingleComponent implements OnInit {
   pokemons = [];
   titles : String[] = ["#","Name", "Type", "Abilities", "Games", "Moves","Picture","Back Picture"];
   API = "https://pokeapi.co/api/v2/pokemon/";
-  ARROW = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbUUv2PaYiXaHKzgTtnA1rinamfXZIYmmyvQ&usqp=CAU";
+  ARROW = "flecha";
 
   constructor() { }
 
@@ -133,10 +133,14 @@ export class SingleComponent implements OnInit {
     let description = "";
     let descriptionData = await this.searchApiId("https://pokeapi.co/api/v2/pokemon-species/",pok.id);
     //console.log(descriptionData);
+    let intDesc = 0;
     for (let desc of descriptionData.flavor_text_entries) {
-      if(desc.language.name==="es"){
-        description = description+" "+desc.flavor_text;
-      }
+        if(desc.language.name==="es"){
+          if(intDesc<=6){
+            description = description+" "+desc.flavor_text;
+            intDesc++;
+          }
+        }
     }
     if(description===""||description===undefined){
       description = descriptionData.flavor_text_entries[0].flavor_text;

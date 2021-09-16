@@ -43,13 +43,32 @@ export class AppComponent implements OnInit {
 
   async search(){
     if(this.busqueda!=""){
-      const unicPoke = await fetch("https://pokeapi.co/api/v2/pokemon/"+this.busqueda);
+      const unicPoke = await fetch("https://pokeapi.co/api/v2/pokemon/"+this.busqueda.toLowerCase());
+      console.log(unicPoke);
       if(unicPoke.status==200){
         const data = await unicPoke.json();
         this.createSinglePokemon(data);
+        document.getElementById("back").removeAttribute('hidden');
+        document.getElementById("prev").remove();
+        document.getElementById("next").remove();
+        document.querySelector(".busqueda").remove();
+        document.getElementById("back").addEventListener("click",()=>{
+          window.location.href = "index.html";
+        }); 
+      }else{
+        document.getElementById("mensaje").setAttribute("style","display : block");
+        document.getElementById("mensaje").textContent = "No se encuentra el Pokemon prueba con otro";
+        setTimeout(()=>{
+          document.getElementById("mensaje").setAttribute("style","display : none");
+        }, 3000);
       }
     }else{
-      window.location.href = "index.html";
+      document.getElementById("mensaje").setAttribute("style","display : block");
+      document.getElementById("mensaje").textContent = "Ingresa el nombre del Pokemon";
+      setTimeout(()=>{
+        document.getElementById("mensaje").setAttribute("style","display : none");
+      }, 3000);
+      //alert("Ingresa el nombre del Pokemon");
     }
   }
 

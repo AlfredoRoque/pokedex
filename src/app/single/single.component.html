@@ -10,61 +10,61 @@
                 </div>
                 <div class="pic-poke">
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Especie: </h3><span class="span-data">{{poke.specie}}</span>
+                        <h4 class="parrafo-title">Especie: </h4><span class="span-data">{{poke.specie}}</span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Tipo: </h3>
+                        <h4 class="parrafo-title">Tipo: </h4>
                         <span class="span-data">
                             <span *ngFor="let type of poke.tipo">{{type}}</span>
                         </span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Habilidades: </h3>
+                        <h4 class="parrafo-title">Habilidades: </h4>
                         <span class="span-data">
                             <span *ngFor="let abil of poke.abilities">{{abil}}</span>
                         </span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Habilidad Especial: </h3><span class="span-data">{{poke.specialAbility}}</span>
+                        <h4 class="parrafo-title">Habilidad Especial: </h4><span class="span-data">{{poke.specialAbility}}</span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Juegos en los que Aparece: </h3>
+                        <h4 class="parrafo-title">Juegos en los que Aparece: </h4>
                         <span class="span-data">
-                            <p *ngFor="let game of poke.game_indices">{{game}}</p>
+                            <p class="par-game" *ngFor="let game of poke.game_indices">{{game}}</p>
                         </span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Peso: </h3><span class="span-data">{{poke.weight}}</span>
+                        <h4 class="parrafo-title">Peso: </h4><span class="span-data">{{poke.weight}}</span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Altura: </h3><span class="span-data">{{poke.height}}</span>
+                        <h4 class="parrafo-title">Altura: </h4><span class="span-data">{{poke.height}}</span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Tipo de Huevo: </h3>
+                        <h4 class="parrafo-title">Tipo de Huevo: </h4>
                         <span class="span-data">
                             <span *ngFor="let egg of poke.eggs_group">{{egg}}</span>
                         </span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Género: </h3>
+                        <h4 class="parrafo-title">Género: </h4>
                         <span class="span-data">
                             <span *ngFor="let gen of poke.gender">{{gen}}</span>
                         </span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Habitat: </h3>
+                        <h4 class="parrafo-title">Habitat: </h4>
                         <span class="span-data">
                             <span *ngFor="let habitat of poke.habitats">{{habitat}}</span>
                         </span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Color: </h3>
+                        <h4 class="parrafo-title">Color: </h4>
                         <span class="span-data">
                             <span *ngFor="let color of poke.colors">{{color}}</span>
                         </span>
                     </div>
                     <div class="parrafo">
-                        <h3 class="parrafo-title">Generación: </h3>
+                        <h4 class="parrafo-title">Generación: </h4>
                         <span class="span-data">
                             <span *ngFor="let generation of poke.generations">{{generation}}</span>
                         </span>
@@ -73,16 +73,17 @@
               </aside>
         </div>
         <div class="evolution" *ngFor="let poke of pokemons; let i = index">
-                <h1>Evoluciones:</h1>
+                <h2>Evoluciones:</h2>
                 <span class="span-image">
-                    <div *ngFor="let evolution of poke.evolutions">
-                        <img class="img-evolution" *ngIf="(evolution!='-')" src="{{evolution}}" alt="evolution">
-                        <img class="img-o" *ngIf="(evolution=='-')" src="https://img2.freepng.es/20180428/xje/kisspng-letter-case-o-alphabet-all-caps-dimensional-characters-26-english-letters-5ae471e0d98030.1299930115249208008909.jpg" alt="evolution">
+                    <div *ngFor="let evolution of poke.evolutions" class="evol-element">
+                        <img class="img-evolution" *ngIf="(evolution!='-'&&evolution!='flecha')" src="{{evolution}}" alt="evolution">
+                        <i *ngIf="(evolution=='flecha')" class="arrow fas fa-arrow-right" style="font-size: 30px;"></i>
+                        <span class="img-o" *ngIf="(evolution=='-')">O</span>
                     </div>
                 </span>
         </div>
         <div class="container-back">
-            <a class="btn-back" href="index.html"> Regresar</a>
+            <a class="btn-secondary btn-lg btn back-button" href="index.html"> <i class="fas fa-arrow-left"></i> Regresar</a>
         </div>
   </div>
 

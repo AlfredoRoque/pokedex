@@ -24,9 +24,12 @@
 
 <div class="busqueda">
   <input class="txtSearch" [(ngModel)]="busqueda" type="text" placeholder="Buscar Pokemon..." />
-  <input class="btnSearch" (click)="search()" type="submit" value="Buscar" />
+  <button class="btn-search btn-default btn-sm" (click)="search()" type="submit">Buscar</button>
+  <div id="mensaje" style="display: none;" class="alert alert-success alert-dismissable">
+    <strong>¡Aviso!</strong>
+    </div>
 </div>
-<table class="table">
+<table class="table table-hover table-condensed table-responsive">
     <thead>
         <tr>
             <th *ngFor="let title of titles">{{title}}</th>
@@ -37,14 +40,15 @@
             <td>{{poke.id}}</td>
             <td><span class="ms-2">{{poke.name}}</span>
             </td>
-            <td><span *ngFor="let type of poke.tipo" class="ms-2">{{type}}</span></td>
+            <td><span *ngFor="let type of poke.tipo" class="">{{type}}</span></td>
             <td><a (click)="searchLink(poke.id)" routerLink="single/{{poke.id}}"><img class="poke-picture-list" src="{{poke.image}}" alt="{{poke.name}}"></a></td>
         </tr>
     </tbody>
 </table>
 <div class="container_btn">
-  <input class="btn" (click)="prevPage()" type="button" value="<--Back">
-  <input class="btn" (click)="nextPage()" type="button" value="Next-->">
+    <button hidden="true" id="back" class="btn-back btn-default btn-lg" type="button"><i class="fas fa-arrow-left"></i> Regresar</button>
+  <button id="prev" class="btn-back btn-default btn-lg" (click)="prevPage()" type="button"><i class="fas fa-arrow-left"></i> Anterior</button>
+  <button id="next" class="btn-back btn-default btn-lg" (click)="nextPage()" type="button" value="Next-->">Sigiente <i class="fas fa-arrow-right"></i></button>
 </div>
 
 <footer hidden="true" id="footer" class="footer">
