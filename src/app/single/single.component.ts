@@ -55,7 +55,12 @@ export class SingleComponent implements OnInit {
     let p:Pokemon = new Pokemon();
     p.id =  pok.id;
     p.name = pok.name;
-    p.image = pok.sprites.other['official-artwork'].front_default;
+    if(pok.sprites.other['official-artwork'].front_default!=null){
+      p.image = pok.sprites.other['official-artwork'].front_default;
+    }else{
+      p.image = pok.sprites.front_default;
+    }
+    console.log(p.image);
     //types
     p.tipo = [];
     for (const typ of pok.types) {
@@ -322,8 +327,11 @@ export class SingleComponent implements OnInit {
       if(descriptionData.evolution_chain!=null){
         if(descriptionData.evolution_chain.url!=null){
           let evol = await this.searchApiStatic(descriptionData.evolution_chain.url);
-          let principal = await this.searchApiId(this.API, pok.id);
+          let id_evol = evol.chain.species.url.replaceAll("/","");
+          id_evol = id_evol.replaceAll("https:pokeapi.coapiv2pokemon-species","");
+          let principal = await this.searchApiId(this.API, id_evol);
           p.evolutions.push(principal.sprites.front_default);
+          console.log(principal.sprites.front_default);
           p.evolutions.push(this.ARROW);
           for (let evolution of evol.chain.evolves_to) {
             let id_evol = evolution.species.url.replaceAll("/","");
@@ -337,7 +345,9 @@ export class SingleComponent implements OnInit {
               if(evolution.evolves_to.length>0){
                 p.evolutions.push(this.ARROW);
                 for (let evolt of evolution.evolves_to) {
-                  let poket2 = await this.searchApiId(this.API,pok.id);
+                  let id_evol = evolt.species.url.replaceAll("/","");
+                  id_evol = id_evol.replaceAll("https:pokeapi.coapiv2pokemon-species","");
+                  let poket2 = await this.searchApiId(this.API,id_evol);
                   if(evolution.evolves_to.indexOf(evolt)>0){
                     p.evolutions.push("-");
                   }
@@ -352,13 +362,13 @@ export class SingleComponent implements OnInit {
             p.evolutions.push(po);
           }
         }else{
-          p.habitats.push("Sin Habitat");
+          p.evolutions.push("Sin Evoluciones");
         }
       }else{
-        p.habitats.push("Sin Habitat");
+        p.evolutions.push("Sin Evoluciones");
       }
     }else{
-      p.habitats.push("Sin Habitat");
+      p.evolutions.push("Sin Evoluciones");
     }
     p.back_image = pok.sprites.back_default;
     this.pokemons.push(p);
