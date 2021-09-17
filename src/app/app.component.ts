@@ -32,6 +32,7 @@ export class Pokemon{
 export class AppComponent implements OnInit {
 
   initAPI = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
+  API = "https://pokeapi.co/api/v2/pokemon/";
   nextPageString = "";
   prevPageString = "";
   pokemonsList = [];
@@ -68,12 +69,11 @@ export class AppComponent implements OnInit {
       setTimeout(()=>{
         document.getElementById("mensaje").setAttribute("style","display : none");
       }, 3000);
-      //alert("Ingresa el nombre del Pokemon");
     }
   }
 
   async searchLink(id){
-      const unicPoke = await fetch("https://pokeapi.co/api/v2/pokemon/"+id);
+      const unicPoke = await fetch(this.API+id);
       if(unicPoke.status==200){
         const data = await unicPoke.json();
         this.createSinglePokemon(data);
@@ -111,22 +111,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     const reslist = await fetch(this.initAPI);
     const data = await reslist.json();
-    //https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/-1/Cucas Rocke/
-    //https://www.bungie.net/Platform/Destiny2/1/Profile/4611686018431116718?components=100
-    //https://www.bungie.net/Platform/Destiny2/1/Profile/4611686018431116718/Character/2305843009265175533/?components=200
-    //https://www.bungie.net/Platform/GroupV2/User/1/4611686018431116718/0/1/
-    //https://www.bungie.net/Platform/Destiny2/2/Profile/4611686018431116718/Character/2305843009265175533/?components=205
-    //https://www.bungie.net/Platform/Destiny2/2/Profile/4611686018431116718/Item/6917529271860482391/?components=300,302,304,305
-    // 798460
-    //const destiny = await fetch("https://www.bungie.net/Platform/Destiny2/Manifest/6/1690783811" ,{
-    //method: "GET",  
-    //headers: {
-    //    'X-API-KEY': '556dd417965d4042aca27f32344a49c6'
-    //}
-    //});
-
-    //const dataDestiny = await destiny.json();
-    //console.log(dataDestiny)
     this.nextPageString = data.next;
     this.prevPageString = data.previous;
     this.createPokemon(data.results);

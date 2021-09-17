@@ -12,7 +12,11 @@ export class SingleComponent implements OnInit {
   pokemons = [];
   titles : String[] = ["#","Name", "Type", "Abilities", "Games", "Moves","Picture","Back Picture"];
   API = "https://pokeapi.co/api/v2/pokemon/";
+  max_results = "?limit=2000&offset=0";
   ARROW = "flecha";
+  index = "index.html";
+  lenguage = "es";
+  API_gender = "https://pokeapi.co/api/v2/gender/";
 
   constructor() { }
 
@@ -24,14 +28,18 @@ export class SingleComponent implements OnInit {
   }
 
   async searchLink(id){
-    if(id<=898){
-    const unicPoke = await this.searchApiId(this.API,id);
-      this.createSinglePokemon(unicPoke);
-      //console.log(unicPoke);
-      document.getElementById("first_container").setAttribute("hidden","true");
-      document.getElementById("footer").setAttribute("hidden","true");
+    let first_api = await this.searchApiStatic(this.API+this.max_results);
+    let last_poke = await this.searchApiStatic(first_api.results[first_api.results.length-1].url);
+    if(id<=last_poke.id){
+      const unicPoke = await this.searchApiId(this.API,id).then(x => {
+        this.createSinglePokemon(x);
+        document.getElementById("first_container").setAttribute("hidden","true");
+        document.getElementById("footer").setAttribute("hidden","true");
+      }).catch((x) => {
+        location.href = this.index;
+      });
     }else{
-      location.href ="index.html";
+      location.href = this.index;
     }
   }
 
@@ -53,7 +61,7 @@ export class SingleComponent implements OnInit {
     for (const typ of pok.types) {
       const typedata = await this.searchApiStatic(typ.type.url);
       for (const typee of typedata.names) {
-        if(typee.language.name==="es"){
+        if(typee.language.name===this.lenguage){
           p.tipo.push(typee.name);
           if(pok.types.indexOf(typ)<pok.types.length-1){
             p.tipo.push(", ");
@@ -73,7 +81,7 @@ export class SingleComponent implements OnInit {
         let abilityData = await this.searchApiStatic(ability.ability.url);
         if(pok.abilities.indexOf(ability)<pok.abilities.length-1){
           for (let abilityName of abilityData.names) {
-            if(abilityName.language.name==="es"){
+            if(abilityName.language.name===this.lenguage){
               p.abilities.push(abilityName.name);
               if(pok.abilities.indexOf(ability)<pok.abilities.length-2){
                 p.abilities.push(", ");
@@ -82,7 +90,7 @@ export class SingleComponent implements OnInit {
           }
         }else if(pok.abilities.indexOf(ability)===pok.abilities.length-1){
           for (let abilityName of abilityData.names) {
-            if(abilityName.language.name==="es"&&pok.abilities.indexOf(ability)==pok.abilities.length-1){
+            if(abilityName.language.name===this.lenguage&&pok.abilities.indexOf(ability)==pok.abilities.length-1){
               p.specialAbility = abilityName.name;
             }
           }
@@ -100,7 +108,7 @@ export class SingleComponent implements OnInit {
       for (let games of pok.game_indices) {
         let gamesData = await this.searchApiStatic(games.version.url);
         for (let agameName of gamesData.names) {
-          if(agameName.language.name==="es"){
+          if(agameName.language.name===this.lenguage){
             p.game_indices.push(agameName.name);
           }
         }
@@ -109,7 +117,6 @@ export class SingleComponent implements OnInit {
     if(p.game_indices.length===0||p.game_indices===undefined){
         p.game_indices.push("Sin Aparición en Video Juegos");
     }
-    console.log(p.game_indices);
     //games
 
     //moves
@@ -118,7 +125,7 @@ export class SingleComponent implements OnInit {
       for (let moves of pok.moves) {
         let movesData = await this.searchApiStatic(moves.move.url);
         for (let moveName of movesData.names) {
-          if(moveName.language.name==="es"){
+          if(moveName.language.name===this.lenguage){
             p.moves.push(moveName.name);
           }
         }
@@ -131,11 +138,11 @@ export class SingleComponent implements OnInit {
 
     //description
     let description = "";
-    let descriptionData = await this.searchApiId("https://pokeapi.co/api/v2/pokemon-species/",pok.id);
-    //console.log(descriptionData);
+    let descriptionDa = await this.searchApiId(this.API,pok.id);
+    let descriptionData = await this.searchApiStatic(descriptionDa.species.url);
     let intDesc = 0;
     for (let desc of descriptionData.flavor_text_entries) {
-        if(desc.language.name==="es"){
+        if(desc.language.name===this.lenguage){
           if(intDesc<=6){
             description = description+" "+desc.flavor_text;
             intDesc++;
@@ -150,7 +157,7 @@ export class SingleComponent implements OnInit {
 
     //specie
     for (let desc of descriptionData.genera) {
-      if(desc.language.name==="es"){
+      if(desc.language.name===this.lenguage){
         p.specie = desc.genus;
       }
     }
@@ -175,7 +182,7 @@ export class SingleComponent implements OnInit {
     for (let egg of descriptionData.egg_groups) {
       let eggsData = await this.searchApiStatic(egg.url);
       for (let eggName of eggsData.names) {
-        if(eggName.language.name==="es"){
+        if(eggName.language.name===this.lenguage){
           p.eggs_group.push(eggName.name);
           if(descriptionData.egg_groups.indexOf(egg)<descriptionData.egg_groups.length-1){
             p.eggs_group.push(", ");
@@ -190,9 +197,9 @@ export class SingleComponent implements OnInit {
 
     //genero
     //https://pokeapi.co/api/v2/gender/id
-    let females = await this.searchApiId("https://pokeapi.co/api/v2/gender/",1);
-    let males = await this.searchApiId("https://pokeapi.co/api/v2/gender/",2);
-    let genderless = await this.searchApiId("https://pokeapi.co/api/v2/gender/",3);
+    let females = await this.searchApiId(this.API_gender,1);
+    let males = await this.searchApiId(this.API_gender,2);
+    let genderless = await this.searchApiId(this.API_gender,3);
     p.gender = [];
     for (const male of males.pokemon_species_details) {
       if(male.pokemon_species.name===pok.name){
@@ -232,7 +239,7 @@ export class SingleComponent implements OnInit {
         for (const habitat of descriptionData.habitat) {
           let habit = await this.searchApiStatic(habitat.url);
           for (let habitName of habit.names) {
-            if(habitName.language.name==="es"){
+            if(habitName.language.name===this.lenguage){
               p.habitats.push(habitName.name);
               if(descriptionData.habitat.indexOf(habitat)<descriptionData.habitat.length-1){
                 p.habitats.push(", ");
@@ -243,7 +250,7 @@ export class SingleComponent implements OnInit {
       }else{
         let habit = await this.searchApiStatic(descriptionData.habitat.url);
         for (let habitName of habit.names) {
-          if(habitName.language.name==="es"){
+          if(habitName.language.name===this.lenguage){
             p.habitats.push(habitName.name);
           }
         }
@@ -260,7 +267,7 @@ export class SingleComponent implements OnInit {
         for (const color of descriptionData.color) {
           let col = await this.searchApiStatic(color.url);
           for (let colorName of col.names) {
-            if(colorName.language.name==="es"){
+            if(colorName.language.name===this.lenguage){
               p.colors.push(colorName.name);
               if(descriptionData.color.indexOf(color)<descriptionData.color.length-1){
                 p.colors.push(", ");
@@ -271,7 +278,7 @@ export class SingleComponent implements OnInit {
       }else{
         let col = await this.searchApiStatic(descriptionData.color.url);
         for (let colorName of col.names) {
-          if(colorName.language.name==="es"){
+          if(colorName.language.name===this.lenguage){
             p.colors.push(colorName.name);
           }
         }
@@ -288,7 +295,7 @@ export class SingleComponent implements OnInit {
         for (const generation of descriptionData.generation) {
           let gen = await this.searchApiStatic(generation.url);
           for (let generationName of gen.names) {
-            if(generationName.language.name==="es"){
+            if(generationName.language.name===this.lenguage){
               p.generations.push(generationName.name);
               if(descriptionData.generation.indexOf(generation)<descriptionData.generation.length-1){
                 p.generations.push(", ");
@@ -299,7 +306,7 @@ export class SingleComponent implements OnInit {
       }else{
         let gen = await this.searchApiStatic(descriptionData.generation.url);
         for (let generationName of gen.names) {
-          if(generationName.language.name==="es"){
+          if(generationName.language.name===this.lenguage){
             p.generations.push(generationName.name);
           }
         }
@@ -312,20 +319,16 @@ export class SingleComponent implements OnInit {
     //evolution chain
     p.evolutions = [];
     if(descriptionData.evolution_chain!=null){
-      //console.log(descriptionData);
       if(descriptionData.evolution_chain!=null){
         if(descriptionData.evolution_chain.url!=null){
-          //console.log(descriptionData.evolution_chain.url);
           let evol = await this.searchApiStatic(descriptionData.evolution_chain.url);
-          let principal = await this.searchApiId(this.API, evol.chain.species.name);
+          let principal = await this.searchApiId(this.API, pok.id);
           p.evolutions.push(principal.sprites.front_default);
           p.evolutions.push(this.ARROW);
-          //console.log(principal);
-          //console.log(evol);
-          //console.log(evol.chain.evolves_to.length);
           for (let evolution of evol.chain.evolves_to) {
-            let poket = await this.searchApiId(this.API,evolution.species.name);
-            //console.log(poket);
+            let id_evol = evolution.species.url.replaceAll("/","");
+            id_evol = id_evol.replaceAll("https:pokeapi.coapiv2pokemon-species","");
+            let poket = await this.searchApiId(this.API,id_evol);
             if(evol.chain.evolves_to.indexOf(evolution)>0){
               p.evolutions.push("-");
             }
@@ -334,8 +337,7 @@ export class SingleComponent implements OnInit {
               if(evolution.evolves_to.length>0){
                 p.evolutions.push(this.ARROW);
                 for (let evolt of evolution.evolves_to) {
-                  let poket2 = await this.searchApiId(this.API,evolt.species.name);
-                  //console.log(poket2);
+                  let poket2 = await this.searchApiId(this.API,pok.id);
                   if(evolution.evolves_to.indexOf(evolt)>0){
                     p.evolutions.push("-");
                   }
@@ -349,7 +351,6 @@ export class SingleComponent implements OnInit {
             p.evolutions = [];
             p.evolutions.push(po);
           }
-          //console.log(p.evolutions);
         }else{
           p.habitats.push("Sin Habitat");
         }
@@ -359,12 +360,9 @@ export class SingleComponent implements OnInit {
     }else{
       p.habitats.push("Sin Habitat");
     }
-    //evolution chain
-    //console.log(descriptionData);
     p.back_image = pok.sprites.back_default;
     this.pokemons.push(p);
 }
-
 
 async searchApiStatic(url){
   let typePoke = await fetch(url);
