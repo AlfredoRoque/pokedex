@@ -1,91 +1,92 @@
 <div *ngIf="pokemons.length>0" id="second_container" class="second_container">
-        <div id="content" class="page-content" *ngFor="let poke of pokemons; let i = index">
-            <p class="content">
-              <span>{{poke.description}}</span>
-            </p>
-            <aside class="card">
-                <span class="namePoke">{{poke.name}}</span>
-                <div class="pic-poke">
-                    <img class="poke-picture" src="{{poke.image}}" alt="{{poke.name}}">
+    <div id="content" class="page-content" *ngFor="let poke of pokemons; let i = index">
+        <p class="content">
+            <span>{{poke.description}}</span>
+        </p>
+        <aside class="card">
+            <span class="namePoke">{{poke.name}}</span>
+            <div class="pic-poke">
+                <img class="poke-picture" src="{{poke.image}}" alt="{{poke.name}}">
+            </div>
+            <div class="pic-poke">
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Especie: </h4><span class="span-data">{{poke.specie}}</span>
                 </div>
-                <div class="pic-poke">
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Especie: </h4><span class="span-data">{{poke.specie}}</span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Tipo: </h4>
-                        <span class="span-data">
-                            <span *ngFor="let type of poke.tipo">{{type}}</span>
-                        </span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Habilidades: </h4>
-                        <span class="span-data">
-                            <span *ngFor="let abil of poke.abilities">{{abil}}</span>
-                        </span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Habilidad Especial: </h4><span class="span-data">{{poke.specialAbility}}</span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Juegos en los que Aparece: </h4>
-                        <span class="span-data">
-                            <p class="par-game" *ngFor="let game of poke.game_indices">{{game}}</p>
-                        </span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Peso: </h4><span class="span-data">{{poke.weight}}</span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Altura: </h4><span class="span-data">{{poke.height}}</span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Tipo de Huevo: </h4>
-                        <span class="span-data">
-                            <span *ngFor="let egg of poke.eggs_group">{{egg}}</span>
-                        </span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Género: </h4>
-                        <span class="span-data">
-                            <span *ngFor="let gen of poke.gender">{{gen}}</span>
-                        </span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Habitat: </h4>
-                        <span class="span-data">
-                            <span *ngFor="let habitat of poke.habitats">{{habitat}}</span>
-                        </span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Color: </h4>
-                        <span class="span-data">
-                            <span *ngFor="let color of poke.colors">{{color}}</span>
-                        </span>
-                    </div>
-                    <div class="parrafo">
-                        <h4 class="parrafo-title">Generación: </h4>
-                        <span class="span-data">
-                            <span *ngFor="let generation of poke.generations">{{generation}}</span>
-                        </span>
-                    </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Tipo: </h4>
+                    <span class="span-data">
+                        <span *ngFor="let type of poke.tipo">{{type}}</span>
+                    </span>
                 </div>
-              </aside>
-        </div>
-        <div class="evolution" *ngFor="let poke of pokemons; let i = index">
-                <h2>Evoluciones:</h2>
-                <span class="span-image">
-                    <div *ngFor="let evolution of poke.evolutions" class="evol-element">
-                        <img class="img-evolution" *ngIf="(evolution!='-'&&evolution!='flecha')" src="{{evolution}}" alt="evolution">
-                        <i *ngIf="(evolution=='flecha')" class="arrow fas fa-arrow-right" style="font-size: 30px;"></i>
-                        <span class="img-o" *ngIf="(evolution=='-')">O</span>
-                    </div>
-                </span>
-        </div>
-        <div class="container-back">
-            <a class="btn-secondary btn-lg btn back-button" href="index.html"> <i class="fas fa-arrow-left"></i> Regresar</a>
-        </div>
-  </div>
-
-
-  
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Habilidades: </h4>
+                    <span class="span-data">
+                        <span *ngFor="let abil of poke.abilities">{{abil}}</span>
+                    </span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Habilidad Especial: </h4><span
+                        class="span-data">{{poke.specialAbility}}</span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Juegos en los que Aparece: </h4>
+                    <span class="span-data">
+                        <p class="par-game" *ngFor="let game of poke.game_indices">{{game}}</p>
+                    </span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Peso: </h4><span class="span-data">{{poke.weight}}</span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Altura: </h4><span class="span-data">{{poke.height}}</span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Tipo de Huevo: </h4>
+                    <span class="span-data">
+                        <span *ngFor="let egg of poke.eggs_group">{{egg}}</span>
+                    </span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Género: </h4>
+                    <span class="span-data">
+                        <span *ngFor="let gen of poke.gender">{{gen}}</span>
+                    </span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Habitat: </h4>
+                    <span class="span-data">
+                        <span *ngFor="let habitat of poke.habitats">{{habitat}}</span>
+                    </span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Color: </h4>
+                    <span class="span-data">
+                        <span *ngFor="let color of poke.colors">{{color}}</span>
+                    </span>
+                </div>
+                <div class="parrafo">
+                    <h4 class="parrafo-title">Generación: </h4>
+                    <span class="span-data">
+                        <span *ngFor="let generation of poke.generations">{{generation}}</span>
+                    </span>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <div class="evolution" *ngFor="let poke of pokemons; let i = index">
+        <h2>Evoluciones:</h2>
+        <span class="span-image">
+            <div *ngFor="let evolution of poke.evolutions" class="evol-element">
+                <img class="img-evolution" *ngIf="(evolution!='-'&&evolution!='flecha')" src="{{evolution}}"
+                    alt="evolution">
+                <i *ngIf="(evolution=='flecha')" class="arrow fas fa-arrow-right" style="font-size: 30px;"></i>
+                <span class="img-o" *ngIf="(evolution=='-')">O</span>
+            </div>
+        </span>
+    </div>
+    <div class="container-back">
+        <a routerLink="/" class="btn-secondary btn-lg btn back-button">
+            <i class="fas fa-arrow-left"></i> Regresar
+        </a>
+    </div>
+</div>
